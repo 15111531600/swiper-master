@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^api/user/login$', user_api.login),
     url(r'^api/user/profile$', user_api.get_profile),
     url(r'^api/user/profile/modify$', user_api.modify_profile),
+    url(r'^api/user/avatar/upload$', user_api.upload_avatar),
 ]

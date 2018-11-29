@@ -1,4 +1,6 @@
+import os
 import random
+from urllib.parse import urljoin
 
 import requests
 from django.core.cache import cache
@@ -6,6 +8,8 @@ from django.core.cache import cache
 from swiper import config
 from worker import call_by_worker
 from worker import celery_app
+from django.conf import settings
+from lib.qncloud import async_upload_to_qiniu
 
 
 def gen_verify_code(length=6):
@@ -31,3 +35,23 @@ def check_vcode(phonenum, vcode):
     key = 'VerifyCode-%s' % phonenum
     saved_vcode = cache.get(key)
     return saved_vcode == vcode
+
+
+def save_upload_file(user,upload_file):
+    '''save upload file and upload to qiniu cloud'''
+    # get file and save
+    ext_name = os.path.splitext(upload_file.name)[-1]
+    filename = 'Avatar-%s%s' % (user, ext_name)
+    filepath = os.path.join(settings.BASE_DIR, settings.MEDIA_ROOT, filename)
+
+    with open(filepath, 'wb') as f:
+        for chunk in upload_file.chunks:
+            f.write(chunk)
+
+    # use celery save avatar to qiniu
+    async_upload_to_qiniu(filepath,filename)
+
+    # save url in sql
+    url = urljoin(config.QN_BASE_URL,filename)
+    user.avatar = url
+    user.save()

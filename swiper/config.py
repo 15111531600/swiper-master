@@ -11,3 +11,9 @@ HY_SMS_PARAMS = {
     'mobile': None,
     'format': 'json'
 }
+
+# qiniu config
+QN_ACCESS_KEY = 'u9g03Jgymv7Bvqfo0alARfGdvcDXizfZmRIVbU7Z'
+QN_SECRET_KEY = 'Sy7Ilv4k9PewOtgQTZzRij9m6h3NSdGs3VoVZRhN'
+QN_BUCKET_NAME = 'swiper'
+QN_BASE_URL = ''

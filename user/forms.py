@@ -18,3 +18,4 @@ class ProfileForm(forms.ModelForm):
         max_dating_age = cleaned_data.get('max_dating_age')
         if min_dating_age > max_dating_age:
             raise forms.ValidationError('min_dating_age > max_dating_age')
+
