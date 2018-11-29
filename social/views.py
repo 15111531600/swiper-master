@@ -16,6 +16,7 @@ def get_user(request):
 
 def like(request):
     '''like'''
+    sid = request.POST.get('sid')
     return render_json()
 
 

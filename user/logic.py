@@ -7,7 +7,6 @@ from django.core.cache import cache
 
 from swiper import config
 from worker import call_by_worker
-from worker import celery_app
 from django.conf import settings
 from lib.qncloud import async_upload_to_qiniu
 
