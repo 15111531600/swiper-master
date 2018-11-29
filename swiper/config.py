@@ -12,8 +12,8 @@ HY_SMS_PARAMS = {
     'format': 'json'
 }
 
-# qiniu config
-QN_ACCESS_KEY = 'u9g03Jgymv7Bvqfo0alARfGdvcDXizfZmRIVbU7Z'
-QN_SECRET_KEY = 'Sy7Ilv4k9PewOtgQTZzRij9m6h3NSdGs3VoVZRhN'
+# 七牛云配置
+QN_ACCESS_KEY = 'kEM0sRR-meB92XU43_a6xZqhiyyTuu5yreGCbFtw'
+QN_SECRET_KEY = 'QxTKqgnOb_UVldphU261qu9IdzmjkgGHh6GQVPPy'
 QN_BUCKET_NAME = 'swiper'
-QN_BASE_URL = ''
+QN_BASE_URL = 'http://piwrt9s56.bkt.clouddn.com'
