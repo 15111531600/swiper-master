@@ -16,7 +16,8 @@ def get_rcmd_user(user):
     max_year = current_year - max_age
 
     users = User.objects.filter(sex=sex, location=location,
-                                birth_year__gte=max_year, birth_day__lte=min_year)
+                                birth_year__gte=max_year,
+                                birth_year__lte=min_year)
 
     return users
 
@@ -24,5 +25,36 @@ def get_rcmd_user(user):
 def like(user, sid):
     '''喜欢一个用户'''
     Swiped.mark(user.id, sid, 'like')
-    if Swiped.is_like(sid, user.id):
+    if Swiped.is_liked(sid, user.id):
         Friend.be_friends(user.id, sid)
+        return True
+    else:
+        return False
+
+
+def superlike(user, sid):
+    '''喜欢一个用户'''
+    Swiped.mark(user.id, sid, 'superlike')
+    if Swiped.is_liked(sid, user.id):
+        Friend.be_friends(user.id, sid)
+        return True
+    else:
+        return False
+
+
+def dislike(user, sid):
+    '''dislike'''
+    Swiped.mark(user.id, sid, 'dislike')
+
+
+def rewind(user, sid):
+    '''rewind'''
+    try:
+        # rewind 滑动记录
+        Swiped.objects.get(uid=user.id,sid=sid).delete()
+    except Swiped.DoesNotExist:
+        pass
+
+    Friend.break_off(user.id, sid)
+
+
