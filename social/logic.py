@@ -2,6 +2,7 @@ import datetime
 
 from user.models import User
 from social.models import Swiped, Friend
+from vip.logic import perm_require
 
 
 def get_rcmd_user(user):
@@ -32,6 +33,7 @@ def like(user, sid):
         return False
 
 
+@perm_require('superlike')
 def superlike(user, sid):
     '''喜欢一个用户'''
     Swiped.mark(user.id, sid, 'superlike')
@@ -47,14 +49,13 @@ def dislike(user, sid):
     Swiped.mark(user.id, sid, 'dislike')
 
 
+@perm_require('rewind')
 def rewind(user, sid):
     '''rewind'''
     try:
         # rewind 滑动记录
-        Swiped.objects.get(uid=user.id,sid=sid).delete()
+        Swiped.objects.get(uid=user.id, sid=sid).delete()
     except Swiped.DoesNotExist:
         pass
 
     Friend.break_off(user.id, sid)
-
-
